@@ -1,0 +1,3 @@
+<?php
+namespace ZinCelestial\Platform\Assets; defined('ABSPATH')||exit;
+final class AssetInventory{public function current():array{global $wp_scripts,$wp_styles;return array('site_id'=>get_current_blog_id(),'scripts'=>$this->read($wp_scripts),'styles'=>$this->read($wp_styles));}private function read($r):array{$o=array();if(!is_object($r))return $o;foreach((array)$r->queue as $h){$x=$r->registered[$h]??null;if($x)$o[$h]=array('handle'=>sanitize_key($h),'src'=>esc_url_raw((string)$x->src),'deps'=>array_map('sanitize_key',(array)$x->deps),'version'=>sanitize_text_field((string)$x->ver));}return $o;}}

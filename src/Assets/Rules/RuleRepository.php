@@ -1,0 +1,3 @@
+<?php
+namespace ZinCelestial\Platform\Assets\Rules; defined('ABSPATH')||exit;
+final class RuleRepository{const OPTION='zcp_asset_rules';public function all():array{$v=get_option(self::OPTION,array());return is_array($v)?$v:array();}public function save(array $rules):bool{$clean=array();foreach($rules as $rule){$r=RuleValidator::sanitize((array)$rule);if($r)$clean[$r['id']]=$r;}return update_option(self::OPTION,$clean,false);}public function applicable(string $type,string $handle):array{return array_values(array_filter($this->all(),fn($r)=>!empty($r['enabled'])&&$r['type']===$type&&$r['handle']===$handle));}}

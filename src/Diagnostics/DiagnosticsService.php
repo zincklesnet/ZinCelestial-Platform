@@ -1,0 +1,3 @@
+<?php
+namespace ZinCelestial\Platform\Diagnostics;use ZinCelestial\Platform\Core\Multisite;use ZinCelestial\Platform\Compatibility\PluginRegistry;defined('ABSPATH')||exit;
+final class DiagnosticsService{public function report():array{global $wp_version;return array('platform'=>array('version'=>ZCP_VERSION,'php'=>PHP_VERSION,'wordpress'=>$wp_version),'multisite'=>Multisite::context(),'integrations'=>PluginRegistry::instance()->status(),'adapter_diagnostics'=>PluginRegistry::instance()->diagnostics(),'performance'=>\ZinCelestial\Platform\Core\Plugin::instance()->performance()->report(),'theme'=>array('name'=>wp_get_theme()->get('Name'),'version'=>wp_get_theme()->get('Version'),'template'=>get_template()));}}

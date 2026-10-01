@@ -1,0 +1,3 @@
+<?php
+namespace ZinCelestial\Platform\Assets\Graph; defined('ABSPATH')||exit;
+final class DependencyGraph{public function build(array $inventory):array{$nodes=array();$edges=array();foreach(array('scripts','styles') as $type){foreach((array)($inventory[$type]??array()) as $handle=>$asset){$id=$type.':'.$handle;$nodes[$id]=array('id'=>$id,'type'=>$type,'handle'=>sanitize_key($handle),'src'=>esc_url_raw((string)($asset['src']??'')));foreach((array)($asset['deps']??array()) as $dep)$edges[]=array('from'=>$type.':'.sanitize_key($dep),'to'=>$id);}}return array('nodes'=>array_values($nodes),'edges'=>$edges);}}

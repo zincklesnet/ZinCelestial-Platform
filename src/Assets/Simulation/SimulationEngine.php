@@ -1,0 +1,3 @@
+<?php
+namespace ZinCelestial\Platform\Assets\Simulation; use ZinCelestial\Platform\Assets\Rules\RuleValidator; defined('ABSPATH')||exit;
+final class SimulationEngine{public function run(array $rules,array $inventory):array{$rows=array();foreach($rules as $rule){$safe=RuleValidator::safe($rule,$inventory);$rows[]=array('rule_id'=>sanitize_key($rule['id']??''),'handle'=>sanitize_key($rule['handle']??''),'action'=>sanitize_key($rule['action']??''),'would_apply'=>!empty($rule['enabled'])&&$safe,'blocked_reason'=>$safe?'':__('Protected handle or dependency conflict.','zincelestial-platform'));}return array('site_id'=>get_current_blog_id(),'generated'=>time(),'results'=>$rows);}}
